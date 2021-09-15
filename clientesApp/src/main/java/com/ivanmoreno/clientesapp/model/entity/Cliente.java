@@ -1,4 +1,4 @@
-package com.ivanmoreno.clientesapp.entity;
+package com.ivanmoreno.clientesapp.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
