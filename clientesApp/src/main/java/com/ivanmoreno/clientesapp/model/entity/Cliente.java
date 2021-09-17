@@ -23,8 +23,8 @@ import lombok.ToString;
 @Builder // generates builder for the fields within
 @NoArgsConstructor // generates a no argument constructor
 @AllArgsConstructor // generates a constructor with all arguments
-@ToString(exclude = {"posts"}) // generates toString method, skipping passed field as name
-@EqualsAndHashCode(exclude = {"posts"}) // generates equals and hashCode methods, skipping passed fields
+@ToString // generates toString method, skipping passed field as name
+@EqualsAndHashCode // generates equals and hashCode methods, skipping passed fields
 @Entity
 @Table(name = "clientes")
 public class Cliente implements Serializable {
