@@ -23,5 +23,23 @@ public class ClienteServiceImpl implements ClienteService {
 		return (List<Cliente>) clienteRepo.findAll();
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public Cliente findById(Long id) {
+		return clienteRepo.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public Cliente save(Cliente cliente) {
+		return clienteRepo.save(cliente);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		clienteRepo.deleteById(id);
+	}
+
 	
 }
