@@ -56,7 +56,14 @@ class ClienteRepositoryTest {
 	
 	@Test
 	void testSave() {
-		Cliente cuentaPedro = new Cliente(null, "Pedro", "GG", "GG@gmail.com", new Date());
+		//Cliente cuentaPedro = new Cliente(null, "Pedro", "GG", "GG@gmail.com", new Date());
+		Cliente cuentaPedro = Cliente.builder()
+				.nombre("Pedro")
+				.apellido("GG")
+				.email("GG@gmail.com")
+				.createAt(new Date())
+				.build();
+		
 		Cliente cuentaSave = clienteRepo.save(cuentaPedro);
 		
 		Cliente cuenta = clienteRepo.findById(cuentaSave.getId()).orElseThrow();
@@ -67,7 +74,14 @@ class ClienteRepositoryTest {
 	
 	@Test
 	void testUpdate() {
-		Cliente cuentaPedro = new Cliente(null, "Pedro", "GG", "GG@gmail.com", new Date());		
+		//Cliente cuentaPedro = new Cliente(null, "Pedro", "GG", "GG@gmail.com", new Date());
+		Cliente cuentaPedro = Cliente.builder()
+				.nombre("Pedro")
+				.apellido("GG")
+				.email("GG@gmail.com")
+				.createAt(new Date())
+				.build();
+		
 		Cliente cuenta = clienteRepo.save(cuentaPedro);
 		
 		assertEquals("Pedro", cuenta.getNombre());
