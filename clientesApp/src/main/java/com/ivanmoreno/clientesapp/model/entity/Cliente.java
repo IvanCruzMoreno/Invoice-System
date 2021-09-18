@@ -2,6 +2,7 @@ package com.ivanmoreno.clientesapp.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ import lombok.ToString;
 @NoArgsConstructor // generates a no argument constructor
 @AllArgsConstructor // generates a constructor with all arguments
 @ToString // generates toString method, skipping passed field as name
-@EqualsAndHashCode // generates equals and hashCode methods, skipping passed fields
+@EqualsAndHashCode(exclude = {"createAt"}) // generates equals and hashCode methods, skipping passed fields
 @Entity
 @Table(name = "clientes")
 public class Cliente implements Serializable {
@@ -48,6 +49,7 @@ public class Cliente implements Serializable {
 	public void prePersist() {
 		createAt = new Date();
 	}
+	
 	
 	private static final long serialVersionUID = 1L;
 }
