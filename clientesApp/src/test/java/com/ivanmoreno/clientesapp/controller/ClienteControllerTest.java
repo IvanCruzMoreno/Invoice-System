@@ -1,6 +1,7 @@
 package com.ivanmoreno.clientesapp.controller;
 
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -19,7 +20,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ivanmoreno.clientesapp.dataTest.DatosTest;
 import com.ivanmoreno.clientesapp.model.entity.Cliente;
@@ -88,9 +88,9 @@ class ClienteControllerTest {
 				.content(objectMapper.writeValueAsString(cliente)))
 		
 		.andExpect(status().isCreated())
-		.andExpect(jsonPath("$.nombre").value("Pepe"))
-		.andExpect(jsonPath("$.apellido").value("PP"))
-		.andExpect(jsonPath("$.id").value("11"));
+		.andExpect(jsonPath("$.cliente.nombre").value("Pepe"))
+		.andExpect(jsonPath("$.cliente.apellido").value("PP"))
+		.andExpect(jsonPath("$.cliente.id").value("11"));
 	}
 	
 	@Test
@@ -110,10 +110,21 @@ class ClienteControllerTest {
 				.content(objectMapper.writeValueAsString(cliente)))
 		
 		.andExpect(status().isCreated())
-		.andExpect(jsonPath("$.nombre").value("Pepe"))
-		.andExpect(jsonPath("$.id").value("1"))
-		.andExpect(jsonPath("$.apellido").value("PP"))
-		.andExpect(jsonPath("$.email").value("pp@gmail.com"));
+		.andExpect(jsonPath("$.cliente.nombre").value("Pepe"))
+		.andExpect(jsonPath("$.cliente.id").value("1"))
+		.andExpect(jsonPath("$.cliente.apellido").value("PP"))
+		.andExpect(jsonPath("$.cliente.email").value("pp@gmail.com"));
+		
+	}
+	
+	@Test
+	void testDelete() throws Exception {
+							
+		mvc.perform(delete("/api/clientes/1")
+				.contentType(MediaType.APPLICATION_JSON))
+		
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.mensaje").value("El cliente eliminado con exito"));
 		
 	}
 }

@@ -2,7 +2,6 @@ package com.ivanmoreno.clientesapp.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,10 +34,12 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(nullable = false)
 	private String nombre;
 	
 	private String apellido;
 	
+	@Column(nullable = false, unique = true)
 	private String email;
 	
 	@Column(name = "create_at")
