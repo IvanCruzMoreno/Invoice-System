@@ -1,5 +1,6 @@
 package com.ivanmoreno.clientesapp.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,11 +9,15 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,11 +27,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ivanmoreno.clientesapp.model.entity.Cliente;
 import com.ivanmoreno.clientesapp.service.ClienteService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class ClienteController {
@@ -70,6 +80,39 @@ public class ClienteController {
 		return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
 	}
 
+	@GetMapping("/clientes/img/{id}")
+	public ResponseEntity<?> verFoto(@PathVariable Long id) {
+		
+		Cliente cliente = null;
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			cliente = clienteService.findById(id);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		if (cliente == null || cliente.getFoto() == null) {
+			response.put("mensaje",
+					"El cliente con el id: ".concat(id.toString().concat(" no tiene foto en la base de datos")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		
+		Resource image = new ByteArrayResource(cliente.getFoto());
+		log.info(cliente.toString());
+		
+//		These lines are for downloading the image
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFilename() + "\"");
+//		ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).headers(headers).body(image);
+		
+		return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+		
+	}
+	
+	
 	@PostMapping("/clientes")
 	public ResponseEntity<?> create(@Valid @RequestBody Cliente cliente, BindingResult result) {
 
@@ -100,6 +143,34 @@ public class ClienteController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
+	@PostMapping("/clientes/upload")
+	public ResponseEntity<?> uploadFoto(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
+		
+		Map<String, Object> response = new HashMap<>();
+		
+		Cliente cliente = clienteService.findById(id);
+		
+		if(!archivo.isEmpty()) {
+			
+			try {
+				cliente.setFoto(archivo.getBytes());
+				log.info(cliente.getNombre().concat(" ").concat(cliente.getFoto().toString()));
+				
+			} catch (IOException e) {
+				response.put("mensaje", "Error al subir la imagen del cliente ".concat(archivo.getOriginalFilename()));
+				response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+			clienteService.save(cliente);
+			
+			response.put("cliente", cliente);
+			response.put("mensaje", "Has subido correctamente la imagen: ".concat(archivo.getOriginalFilename()));
+		}
+		
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+	
 	@PutMapping("/clientes/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Cliente cliente, BindingResult result, @PathVariable Long id) {
 
@@ -158,5 +229,7 @@ public class ClienteController {
 		response.put("mensaje", "El cliente eliminado con exito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
+	
+	
 
 }

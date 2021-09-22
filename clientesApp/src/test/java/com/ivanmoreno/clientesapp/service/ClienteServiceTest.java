@@ -56,7 +56,12 @@ class ClienteServiceTest {
 	@Test
 	void testSave() {
 		
-		Cliente newCliente = new Cliente(null, "Lil x", "Mu", "lilx@gmail.com", new Date());
+		Cliente newCliente = Cliente.builder()
+							.nombre("Lil x")
+							.apellido("Mu")
+							.email("lilx@gmail.com")
+							.createAt(new Date())
+							.build();
 		
 		when(clienteRepo.save(any())).then(invocation -> {
 			Cliente cliente = invocation.getArgument(0);
