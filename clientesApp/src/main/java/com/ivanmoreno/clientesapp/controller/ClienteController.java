@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ivanmoreno.clientesapp.model.entity.Cliente;
+import com.ivanmoreno.clientesapp.model.entity.Region;
 import com.ivanmoreno.clientesapp.service.ClienteService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -112,6 +113,10 @@ public class ClienteController {
 		
 	}
 	
+	@GetMapping("/clientes/regiones")
+	public List<Region> listarRegiones() {
+		return clienteService.findAllRegiones();
+	}
 	
 	@PostMapping("/clientes")
 	public ResponseEntity<?> create(@Valid @RequestBody Cliente cliente, BindingResult result) {
@@ -198,7 +203,8 @@ public class ClienteController {
 			clienteDB.setNombre(cliente.getNombre());
 			clienteDB.setApellido(cliente.getApellido());
 			clienteDB.setEmail(cliente.getEmail());
-
+			clienteDB.setRegion(cliente.getRegion());
+			
 			clienteUpdate = clienteService.save(clienteDB);
 
 		} catch (DataAccessException e) {

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ivanmoreno.clientesapp.model.entity.Cliente;
+import com.ivanmoreno.clientesapp.model.entity.Region;
 import com.ivanmoreno.clientesapp.model.repository.ClienteRepository;
 
 @Service
@@ -47,6 +48,12 @@ public class ClienteServiceImpl implements ClienteService {
 	@Transactional
 	public void delete(Long id) {
 		clienteRepo.deleteById(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Region> findAllRegiones() {
+		return clienteRepo.findAllRegiones();
 	}
 
 }
