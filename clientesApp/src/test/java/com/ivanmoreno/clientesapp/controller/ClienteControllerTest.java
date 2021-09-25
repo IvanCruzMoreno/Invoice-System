@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ivanmoreno.clientesapp.dataTest.DatosTest;
 import com.ivanmoreno.clientesapp.model.entity.Cliente;
+import com.ivanmoreno.clientesapp.model.entity.Region;
 import com.ivanmoreno.clientesapp.service.ClienteService;
 
 @WebMvcTest(ClienteController.class)
@@ -138,6 +139,7 @@ class ClienteControllerTest {
 									.nombre("Pepe")
 									.apellido("PP")
 									.email("pp@gmail.com")
+									.region(new Region(1L, "centroamerica"))
 									.build();
 		
 		when(clienteService.save(any())).then(invocation -> {
@@ -163,6 +165,7 @@ class ClienteControllerTest {
 				.nombre("Pepe")
 				.apellido("PP")
 				.email("pp@gmail.com")
+				.region(new Region(1L, "centroamerica"))
 				.build();
 										
 		when(clienteService.findById(1L)).thenReturn(DatosTest.crearCliente001().orElseThrow());

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.ivanmoreno.clientesapp.model.entity.Cliente;
+import com.ivanmoreno.clientesapp.model.entity.Region;
 
 @DataJpaTest
 class ClienteRepositoryTest {
@@ -62,6 +63,7 @@ class ClienteRepositoryTest {
 				.apellido("GG")
 				.email("GG@gmail.com")
 				.createAt(new Date())
+				.region(new Region(1L, "centroamerica"))
 				.build();
 		
 		Cliente cuentaSave = clienteRepo.save(cuentaPedro);
@@ -80,6 +82,7 @@ class ClienteRepositoryTest {
 				.apellido("GG")
 				.email("GG@gmail.com")
 				.createAt(new Date())
+				.region(new Region(1L, "centroamerica"))
 				.build();
 		
 		Cliente cuenta = clienteRepo.save(cuentaPedro);

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import com.ivanmoreno.clientesapp.model.entity.Cliente;
+import com.ivanmoreno.clientesapp.model.entity.Region;
 
 public class DatosTest {
 
@@ -14,6 +15,7 @@ public class DatosTest {
 									.apellido("Moreno")
 									.email("ivanmoreno@gmail.com")
 									.createAt(new Date())
+									.region(new Region(1L, "centroamerica"))
 									.build());
 	}
 	
@@ -24,6 +26,7 @@ public class DatosTest {
 									.apellido("Moreno")
 									.email("carlos@gmail.com")
 									.createAt(new Date())
+									.region(new Region(2L, "norteamerica"))
 									.build());
 	}
 	
@@ -34,6 +37,7 @@ public class DatosTest {
 									.apellido("Wood")
 									.email("woodCruz@gmail.com")
 									.createAt(new Date())
+									.region(new Region(3L, "sudaamerica"))
 									.build());
 	}
 }
