@@ -18,9 +18,10 @@ import javax.persistence.UniqueConstraint;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements Serializable{

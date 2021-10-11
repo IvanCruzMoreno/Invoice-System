@@ -14,3 +14,13 @@ insert into clientes (region_id, nombre, apellido, email, create_at) values(4, '
 insert into clientes (region_id, nombre, apellido, email, create_at) values(4, 'rocke','blanco','rockeblanco@sinbad.com','2020-11-08');
 insert into clientes (region_id, nombre, apellido, email, create_at) values(5, 'blue','azul','blue@sinbad.com','2020-06-03');
 insert into clientes (region_id, nombre, apellido, email, create_at) values(3, 'green','verde','green@sinbad.com','2020-09-03');
+
+insert into usuarios (username, password, enabled) values ('benq', '$2a$10$pZdha0D7yZRYn3AsOz1rR.DEVU.K7QLTlCXprYtrxmfSgomT1VIZS', 1);
+insert into usuarios (username, password, enabled) values ('admin', '$2a$10$hFUrZSpA0lzgeL/lkRoaj.U4KNZkBWp8RdicY2tT7UpSN6/VNrtwa', 1);
+
+insert into roles (nombre) values ('ROLE_USER');
+insert into roles (nombre) values ('ROLE_ADMIN');
+
+insert into usuarios_roles (usuario_id, role_id) values (1, 1);
+insert into usuarios_roles (usuario_id, role_id) values (2, 2);
+insert into usuarios_roles (usuario_id, role_id) values (2, 1);

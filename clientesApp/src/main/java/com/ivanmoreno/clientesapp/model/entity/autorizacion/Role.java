@@ -11,9 +11,10 @@ import javax.persistence.Table;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 @Entity
 @Table(name = "roles")
 public class Role implements Serializable{
