@@ -47,6 +47,12 @@ public class Usuario implements Serializable{
 			)
 	private List<Role> roles;
 	
+	private String nombre;
+	
+	private String apellido;
+	
+	private String email;
+	
 	private static final long serialVersionUID = 1L;
 
 }
