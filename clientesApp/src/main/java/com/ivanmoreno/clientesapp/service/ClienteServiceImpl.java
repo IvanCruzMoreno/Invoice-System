@@ -8,16 +8,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ivanmoreno.clientesapp.model.entity.Cliente;
+import com.ivanmoreno.clientesapp.model.entity.Factura;
+import com.ivanmoreno.clientesapp.model.entity.Producto;
 import com.ivanmoreno.clientesapp.model.entity.Region;
 import com.ivanmoreno.clientesapp.model.repository.ClienteRepository;
+import com.ivanmoreno.clientesapp.model.repository.FacturaRepository;
+import com.ivanmoreno.clientesapp.model.repository.ProductoRepository;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
 	private ClienteRepository clienteRepo;
+	private FacturaRepository facturaRepo;
+	private ProductoRepository productoRepo;
 	
-	public ClienteServiceImpl(ClienteRepository clienteRepo) {
+	public ClienteServiceImpl(ClienteRepository clienteRepo, FacturaRepository facturaRepo, ProductoRepository productoRepo) {
 		this.clienteRepo = clienteRepo;
+		this.facturaRepo = facturaRepo;
+		this.productoRepo = productoRepo;
 	}
 	
 	@Override
@@ -54,6 +62,30 @@ public class ClienteServiceImpl implements ClienteService {
 	@Transactional(readOnly = true)
 	public List<Region> findAllRegiones() {
 		return clienteRepo.findAllRegiones();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Factura findFacturaById(Long id) {
+		return facturaRepo.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public Factura saveFactura(Factura factura) {
+		return facturaRepo.save(factura);
+	}
+
+	@Override
+	@Transactional
+	public void deleteFacturaById(Long id) {
+		facturaRepo.deleteById(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Producto> findProductoByName(String name) {
+		return productoRepo.findByName(name);
 	}
 
 }

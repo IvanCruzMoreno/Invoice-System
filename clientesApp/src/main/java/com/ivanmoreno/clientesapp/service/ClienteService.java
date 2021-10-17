@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.ivanmoreno.clientesapp.model.entity.Cliente;
+import com.ivanmoreno.clientesapp.model.entity.Factura;
+import com.ivanmoreno.clientesapp.model.entity.Producto;
 import com.ivanmoreno.clientesapp.model.entity.Region;
 
 public interface ClienteService {
@@ -21,4 +23,12 @@ public interface ClienteService {
 	public void delete(Long id);
 	
 	public List<Region> findAllRegiones();
+	
+	public Factura findFacturaById(Long id);
+	
+	public Factura saveFactura(Factura factura);
+	
+	public void deleteFacturaById(Long id);
+	
+	public List<Producto> findProductoByName(String name);
 }
