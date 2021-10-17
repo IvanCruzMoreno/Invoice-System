@@ -1,8 +1,11 @@
 package com.ivanmoreno.clientesapp.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,12 +32,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data // generates getters, setters, equals, toString & hashCode we well
 @Builder // generates builder for the fields within
-@NoArgsConstructor // generates a no argument constructor
 @AllArgsConstructor // generates a constructor with all arguments
 @ToString(exclude = {"foto"}) // generates toString method, skipping passed field as name
 @EqualsAndHashCode(exclude = {"createAt", "foto"}) // generates equals and hashCode methods, skipping passed fields
@@ -71,6 +73,13 @@ public class Cliente implements Serializable {
 	@JoinColumn(name = "region_id")
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	private Region region;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Factura> facturas;
+	
+	public Cliente() {
+		this.facturas = new ArrayList<>();
+	}
 	
 	@PrePersist
 	public void prePersist() {

@@ -15,6 +15,24 @@ insert into clientes (region_id, nombre, apellido, email, create_at) values(4, '
 insert into clientes (region_id, nombre, apellido, email, create_at) values(5, 'blue','azul','blue@sinbad.com','2020-06-03');
 insert into clientes (region_id, nombre, apellido, email, create_at) values(3, 'green','verde','green@sinbad.com','2020-09-03');
 
+insert into productos (nombre, precio, create_at) values ('monitor', 356, NOW());
+insert into productos (nombre, precio, create_at) values ('PC', 3000, NOW());
+insert into productos (nombre, precio, create_at) values ('lapiz', 5, NOW());
+insert into productos (nombre, precio, create_at) values ('cuaderno', 35, NOW());
+insert into productos (nombre, precio, create_at) values ('lampara', 50, NOW());
+
+insert into facturas (descripcion, observacion, cliente_id, create_at) values('Factura prueba 1', null, 1, NOW());
+
+insert into facturas_items(cantidad, factura_id, producto_id) values (2, 1, 1);
+insert into facturas_items(cantidad, factura_id, producto_id) values (3, 1, 2);
+insert into facturas_items(cantidad, factura_id, producto_id) values (3, 1, 3);
+insert into facturas_items(cantidad, factura_id, producto_id) values (9, 1, 4);
+
+insert into facturas (descripcion, observacion, cliente_id, create_at) values('Factura prueba 2', null, 1, NOW());
+
+insert into facturas_items(cantidad, factura_id, producto_id) values (3, 2, 5);
+
+
 insert into usuarios (username, password, enabled, nombre, apellido, email) values ('benq', '$2a$10$pZdha0D7yZRYn3AsOz1rR.DEVU.K7QLTlCXprYtrxmfSgomT1VIZS', 1, 'BEn Q', 'Q2', 'ben@q.com');
 insert into usuarios (username, password, enabled, nombre, apellido, email) values ('admin', '$2a$10$hFUrZSpA0lzgeL/lkRoaj.U4KNZkBWp8RdicY2tT7UpSN6/VNrtwa', 1, 'Rocket', 'RO', 'rocket@q.com');
 
